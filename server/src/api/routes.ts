@@ -246,6 +246,19 @@ export function createApiRouter(
     res.status(201).json({ rule: newRule });
   });
 
+  // ── DELETE /rules/:id ──────────────────────────────────────────────────────
+  router.delete('/rules/:id', async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const removed = engine.unregisterRule(id); // also removes from Redis
+    if (!removed) {
+      res.status(404).json({ error: `Rule "${id}" not found` });
+      return;
+    }
+    console.log(`[api] Rule deleted from Redis Cloud: ${id}`);
+    io.emit('RULE_DELETED', { id });
+    res.json({ success: true, deletedId: id });
+  });
+
   // ── GET /players/:id/state ─────────────────────────────────────────────────
   router.get('/players/:id/state', async (req: Request, res: Response) => {
     const { id } = req.params;
