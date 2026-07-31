@@ -122,6 +122,14 @@ export default function App() {
   const resetAllLocalState = useCallback(() => {
     setLedgerEntries([]);
     setPlayerStates({});
+    setMetrics({
+      eventsProcessed: 0,
+      rewardsGranted: 0,
+      rewardsDeduped: 0,
+      avgEvalTimeMs: 0,
+      connectedClients: 1,
+      timestamp: Date.now(),
+    });
     handlePlayerChange(selectedPlayer);
   }, [handlePlayerChange, selectedPlayer]);
 
