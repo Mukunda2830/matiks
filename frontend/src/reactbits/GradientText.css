@@ -1,0 +1,39 @@
+/* GradientText CSS — ReactBits */
+.animated-gradient-text-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+}
+
+.animated-gradient-text-content {
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift linear infinite;
+  display: inline-block;
+}
+
+.animated-gradient-overlay {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background-size: 300% 100%;
+  animation: gradient-shift linear infinite;
+  z-index: -1;
+  opacity: 0.25;
+  filter: blur(4px);
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

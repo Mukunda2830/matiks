@@ -1,0 +1,14 @@
+# Dependency directories
+node_modules/
+
+# Production builds
+dist/
+build/
+
+# Environment files (exclude secret Redis credentials)
+.env
+.env.local
+
+# System & Log files
+*.log
+.DS_Store

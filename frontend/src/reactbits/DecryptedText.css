@@ -1,0 +1,9 @@
+/* DecryptedText CSS — ReactBits */
+.decrypted-text-parent {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+.decrypted-text {
+  font-family: inherit;
+}

@@ -1,0 +1,2 @@
+## 2026-07-30T23:29:05Z
+You are a survey explorer. Read /home/ebis/matiks/ORIGINAL_REQUEST.md. Explore the project directory /home/ebis/matiks to see if any existing files, package.json, or directory structure exist. Investigate environment constraints, node/npm environment, and directory layout. Write your detailed findings and handoff report to /home/ebis/matiks/.agents/explorer_survey_1/handoff.md.
