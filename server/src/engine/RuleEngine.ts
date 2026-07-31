@@ -64,6 +64,10 @@ export class RuleEngine {
     return this.indexer.unregisterRule(ruleId);
   }
 
+  public clear(): void {
+    this.indexer.clear();
+  }
+
   public getCandidateRules(category: string, result: MatchResult): Rule[] {
     return this.indexer.getCandidateRules(category, result);
   }

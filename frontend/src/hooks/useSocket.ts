@@ -32,6 +32,7 @@ export interface SocketCallbacks {
   onMetricsUpdate?: (payload: MetricsPayload) => void;
   onPlayerStateUpdate?: (payload: PlayerState) => void;
   onRuleAdded?: (rule: Rule) => void;
+  onStoreFlushed?: () => void;
   onConnect?: () => void;
   onDisconnect?: () => void;
 }
@@ -83,6 +84,9 @@ export function useSocket(callbacks: SocketCallbacks) {
     );
     socket.on('RULE_ADDED', (rule: Rule) =>
       callbacksRef.current.onRuleAdded?.(rule)
+    );
+    socket.on('STORE_FLUSHED', () =>
+      callbacksRef.current.onStoreFlushed?.()
     );
 
     return () => {

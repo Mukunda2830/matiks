@@ -19,6 +19,7 @@ import { RewardDispatcher } from '../engine/RewardDispatcher';
 import { MatchCompletedEvent, Rule } from '../domain/models';
 import { buildMetricsPayload } from './socketHandlers';
 import { keyValueStore } from '../store/KeyValueStore';
+import { getSeedRules } from '../domain/seedRules';
 
 interface Metrics {
   eventsProcessed: number;
@@ -287,6 +288,30 @@ export function createApiRouter(
       count: keys.length,
       keys,
     });
+  });
+
+  // ── POST /store/flush ───────────────────────────────────────────────────────
+  router.post('/store/flush', async (_req: Request, res: Response) => {
+    await keyValueStore.flushAll();
+    dispatcher.clear();
+    engine.clear();
+    
+    // Re-seed default rules into store
+    const seedRules = getSeedRules();
+    for (const rule of seedRules) {
+      await engine.registerRule(rule);
+    }
+
+    // Reset system metrics
+    metrics.eventsProcessed = 0;
+    metrics.rewardsGranted = 0;
+    metrics.rewardsDeduped = 0;
+    metrics.totalEvalTimeMs = 0;
+    metrics.evalCount = 0;
+
+    io.emit('METRICS_UPDATE', buildMetricsPayload(io, metrics));
+    io.emit('STORE_FLUSHED', { timestamp: new Date().toISOString() });
+    res.json({ success: true, message: 'Database store and metrics successfully reset to 0 records.' });
   });
 
   return router;
